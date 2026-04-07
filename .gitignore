@@ -22,3 +22,6 @@ rad.json
 TestResults.xml
 
 .env
+.idea/
+venv/
+db.sqlite3
