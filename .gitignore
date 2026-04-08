@@ -25,3 +25,9 @@ TestResults.xml
 .idea/
 venv/
 db.sqlite3
+
+.DS_Store
+Thumbs.db
+*.angular/
+*.vscode/
+node_modules/
