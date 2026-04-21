@@ -1,0 +1,7 @@
+$kind: http-request
+name: Me (Current User)
+url: http://127.0.0.1:8000/api/users/me/
+method: GET
+headers:
+  Authorization: Bearer YOUR_ACCESS_TOKEN
+order: 4000

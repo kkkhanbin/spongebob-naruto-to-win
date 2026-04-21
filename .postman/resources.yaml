@@ -1,0 +1,16 @@
+# Use this workspace to collaborate
+workspace:
+  id: ""
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
+cloudResources:
+  collections:
+    ..\postman\collections\spongebob-naruto-to-win: 5b53306a-9c48-4a97-9a2b-1fc4cdbdfac6
+    ..\postman\collections\spongebob-naruto-to-win Copy: bec698a1-578b-49ba-91b1-008a6876c28d
+
+# All resources in the `postman/` folder are automatically registered in Local View.
+# Point to additional files outside the `postman/` folder to register them individually. Example:
+#localResources:
+#  collections:
+#    - ../tests/E2E Test Collection/

@@ -1,0 +1,13 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/auth/login/
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "username": "testuser",
+      "password": "12345678"
+    }
+order: 2000

@@ -15,7 +15,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class Login {
   loginForm: LoginRequest = { username: '', password: '' };
-  registerForm: RegisterRequest = { username: '', email: '', birth_date: '', password: '' };
+  registerForm: RegisterRequest = { username: '', email: '', birth_date: null, password: '' };
   activePanel: 'login' | 'register' = 'login';
   loginError = '';
   registerError = '';
@@ -62,12 +62,17 @@ export class Login {
     this.registerError = '';
     this.registerSuccess = '';
 
-    this.apiService.register(this.registerForm).subscribe({
+    const payload: RegisterRequest = {
+      ...this.registerForm,
+      birth_date: this.registerForm.birth_date || null,
+    };
+
+    this.apiService.register(payload).subscribe({
       next: () => {
         this.switchPanel('login', false);
-        this.registerSuccess = 'Аккаунт создан. Теперь войдите под своими данными.';
+        this.registerSuccess = 'Account created';
         this.loginForm.username = this.registerForm.username;
-        this.registerForm = { username: '', email: '', birth_date: '', password: '' };
+        this.registerForm = { username: '', email: '', birth_date: null, password: '' };
       },
       error: (error: Error) => {
         this.registerError = error.message;
