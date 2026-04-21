@@ -101,6 +101,12 @@ export class ApiService {
       .pipe(catchError((error) => this.handleError(error)));
   }
 
+  refreshToken(refresh: string): Observable<LoginResponse | { access: string }> {
+    return this.http
+      .post<LoginResponse | { access: string }>(`${this.baseUrl}/auth/refresh/`, { refresh })
+      .pipe(catchError((error) => this.handleError(error)));
+  }
+
   register(payload: RegisterRequest): Observable<User> {
     return this.http
       .post<User>(`${this.baseUrl}/users/register/`, payload)
@@ -110,6 +116,12 @@ export class ApiService {
   getProfile(): Observable<User> {
     return this.http
       .get<User>(`${this.baseUrl}/users/me/`)
+      .pipe(catchError((error) => this.handleError(error)));
+  }
+
+  updateProfile(payload: Partial<Pick<User, 'birth_date'>>): Observable<User> {
+    return this.http
+      .patch<User>(`${this.baseUrl}/users/me/`, payload)
       .pipe(catchError((error) => this.handleError(error)));
   }
 

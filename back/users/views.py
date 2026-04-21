@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .serializers import RegisterSerializer, UserSerializer
 
 
-class UserProfileView(generics.RetrieveAPIView):
+class UserProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 

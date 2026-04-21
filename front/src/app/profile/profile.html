@@ -59,6 +59,23 @@
   </article>
 </section>
 
+<section class="card panel panel--compact">
+  <div class="panel__header">
+    <div>
+      <p class="eyebrow">Birth Date</p>
+      <h2>Изменение даты рождения</h2>
+    </div>
+  </div>
+
+  <form class="wallet-form" (ngSubmit)="updateBirthDate()">
+    <label>
+      Дата рождения
+      <input type="date" name="birthDateDraft" [(ngModel)]="birthDateDraft" />
+    </label>
+    <button class="submit" type="submit">Сохранить дату</button>
+  </form>
+</section>
+
 <section class="card panel">
   <div class="panel__header">
     <div>

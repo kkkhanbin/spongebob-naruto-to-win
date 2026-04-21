@@ -20,6 +20,7 @@ export class Profile implements OnInit {
   successMessage = '';
   loading = false;
   depositAmount = 100;
+  birthDateDraft = '';
 
   constructor(private readonly apiService: ApiService) {}
 
@@ -40,6 +41,7 @@ export class Profile implements OnInit {
     this.apiService.getProfile().subscribe({
       next: (user) => {
         this.user = user;
+        this.birthDateDraft = user.birth_date ?? '';
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
@@ -86,5 +88,25 @@ export class Profile implements OnInit {
         this.errorMessage = error.message;
       },
     });
+  }
+
+  updateBirthDate() {
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.apiService
+      .updateProfile({
+        birth_date: this.birthDateDraft || null,
+      })
+      .subscribe({
+        next: (user) => {
+          this.user = user;
+          this.birthDateDraft = user.birth_date ?? '';
+          this.successMessage = 'Дата рождения обновлена.';
+        },
+        error: (error: Error) => {
+          this.errorMessage = error.message;
+        },
+      });
   }
 }
