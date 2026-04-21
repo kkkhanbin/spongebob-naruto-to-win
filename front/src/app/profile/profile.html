@@ -1,0 +1,118 @@
+<section class="profile-grid">
+  <article class="card panel">
+    <div class="panel__header">
+      <div>
+        <p class="eyebrow">Player Profile</p>
+        <h1>{{ user?.username ?? 'Игрок' }}</h1>
+      </div>
+      <button class="mini-button" type="button" (click)="refreshAll()">Обновить данные</button>
+    </div>
+
+    @if (user) {
+      <div class="detail-grid">
+        <div>
+          <span>Email</span>
+          <strong>{{ user.email }}</strong>
+        </div>
+        <div>
+          <span>Дата рождения</span>
+          <strong>{{ user.birth_date || 'Не указана' }}</strong>
+        </div>
+        <div>
+          <span>Верификация</span>
+          <strong>{{ user.is_verified ? 'Подтвержден' : 'Не подтвержден' }}</strong>
+        </div>
+        <div>
+          <span>Маршрут</span>
+          <strong>/profile</strong>
+        </div>
+      </div>
+    } @else if (loading) {
+      <p class="muted">Загружаем профиль...</p>
+    }
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+
+    @if (successMessage) {
+      <p class="success">{{ successMessage }}</p>
+    }
+  </article>
+
+  <article class="card panel">
+    <div class="panel__header">
+      <div>
+        <p class="eyebrow">Wallet</p>
+        <h2>${{ wallet?.balance ?? '0.00' }}</h2>
+      </div>
+      <a class="text-link" routerLink="/roulette">Перейти к игре</a>
+    </div>
+
+    <form class="wallet-form" (ngSubmit)="depositFunds()">
+      <label>
+        Сумма пополнения
+        <input type="number" min="1" name="depositAmount" [(ngModel)]="depositAmount" required />
+      </label>
+      <button class="submit" type="submit">Пополнить</button>
+    </form>
+  </article>
+</section>
+
+<section class="card panel panel--compact">
+  <div class="panel__header">
+    <div>
+      <p class="eyebrow">Birth Date</p>
+      <h2>Изменение даты рождения</h2>
+    </div>
+  </div>
+
+  <form class="wallet-form" (ngSubmit)="updateBirthDate()">
+    <label>
+      Дата рождения
+      <input type="date" name="birthDateDraft" [(ngModel)]="birthDateDraft" />
+    </label>
+    <button class="submit" type="submit">Сохранить дату</button>
+  </form>
+</section>
+
+<section class="card panel">
+  <div class="panel__header">
+    <div>
+      <p class="eyebrow">Game History</p>
+      <h2>История игр</h2>
+    </div>
+    <button class="mini-button" type="button" (click)="loadGameHistory()">Обновить историю</button>
+  </div>
+
+  @if (gameHistory.length) {
+    <div class="history-table">
+      @for (game of gameHistory; track game.id) {
+        <div class="history-row">
+          <div>
+            <span>Игра</span>
+            <strong>{{ game.game }}</strong>
+          </div>
+          <div>
+            <span>Результат</span>
+            <strong>{{ game.result }}</strong>
+          </div>
+          <div>
+            <span>Ставка</span>
+            <strong>${{ game.amount }}</strong>
+          </div>
+          <div>
+            <span>Выплата</span>
+            <strong>${{ game.payout }}</strong>
+          </div>
+          <div>
+            <span>Дата</span>
+            <strong>{{ game.date | date: 'short' }}</strong>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="muted">Пока нет сыгранных раундов.</p>
+  }
+</section>

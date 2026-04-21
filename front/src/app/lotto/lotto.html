@@ -1,0 +1,71 @@
+<section class="lotto-layout">
+  <article class="card lotto-card">
+    <div class="panel__header">
+      <div>
+        <p class="eyebrow">Lotto</p>
+        <h1>Выберите 6 чисел из 49</h1>
+      </div>
+      <a class="text-link" routerLink="/profile">К профилю</a>
+    </div>
+
+    <div class="selected-strip">
+      @if (bet.numbers.length) {
+        @for (number of bet.numbers; track number) {
+          <span>{{ number }}</span>
+        }
+      } @else {
+        <p class="muted">Числа ещё не выбраны.</p>
+      }
+    </div>
+
+    <div class="number-grid">
+      @for (number of numbers; track number) {
+        <button
+          type="button"
+          [class.selected]="bet.numbers.includes(number)"
+          (click)="toggleNumber(number)">
+          {{ number }}
+        </button>
+      }
+    </div>
+
+    <form class="lotto-form" (ngSubmit)="play()">
+      <label>
+        Сумма ставки
+        <input type="number" min="1" name="amount" [(ngModel)]="bet.amount" required />
+      </label>
+
+      <div class="form-actions">
+        <button class="secondary" type="button" (click)="quickPick()">Случайный выбор</button>
+        <button class="submit" type="submit" [disabled]="drawing">
+          {{ drawing ? 'Розыгрыш...' : 'Играть' }}
+        </button>
+      </div>
+    </form>
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+  </article>
+
+  <article class="card result-card">
+    <h2>Результат тиража</h2>
+
+    @if (result) {
+      <p class="muted">Выигрышные числа</p>
+      <div class="selected-strip selected-strip--result">
+        @for (number of result.winning_numbers; track number) {
+          <span>{{ number }}</span>
+        }
+      </div>
+      <p>Совпадений: <strong>{{ result.matches }}</strong></p>
+      <p>Выплата: <strong>${{ result.payout }}</strong></p>
+      <p>Баланс: <strong>${{ result.balance }}</strong></p>
+      <p class="result-status" [class.result-status--win]="result.win" [class.result-status--lose]="!result.win">
+        {{ result.win ? 'Есть выигрыш' : 'Без выигрыша' }}
+      </p>
+    } @else {
+      <p class="muted">Отправьте ставку, чтобы получить выигрышные числа от API.</p>
+    }
+  </article>
+</section>

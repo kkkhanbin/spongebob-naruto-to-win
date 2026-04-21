@@ -1,0 +1,130 @@
+.lotto-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  gap: 1.25rem;
+}
+
+.lotto-card,
+.result-card {
+  padding: 1.5rem;
+}
+
+.panel__header,
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.selected-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  min-height: 3rem;
+  margin: 1rem 0;
+}
+
+.selected-strip span {
+  display: grid;
+  place-items: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.selected-strip--result span {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #07101d;
+}
+
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.number-grid button {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.9rem;
+  padding: 0.85rem 0;
+  color: #f7f9ff;
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+}
+
+.number-grid button.selected {
+  color: #07101d;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+}
+
+.lotto-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.lotto-form label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--muted);
+}
+
+.lotto-form input {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  padding: 0.9rem 1rem;
+  background: rgba(5, 12, 22, 0.78);
+  color: #f7f9ff;
+}
+
+.submit,
+.secondary {
+  border: 0;
+  border-radius: 1rem;
+  padding: 0.9rem 1rem;
+  cursor: pointer;
+}
+
+.submit {
+  font-weight: 800;
+  color: #07101d;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+}
+
+.secondary {
+  color: #f7f9ff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.result-status {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.result-status--win {
+  color: #4ade80;
+}
+
+.result-status--lose {
+  color: #fca5a5;
+}
+
+@media (max-width: 900px) {
+  .lotto-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .number-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
