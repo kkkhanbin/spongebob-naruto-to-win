@@ -1,0 +1,53 @@
+<section class="auth-layout">
+  <article class="form-card">
+    <p class="eyebrow">Welcome back</p>
+    <h1>Sign in to your account</h1>
+    <p class="description">
+      Enter the casino floor, restore your session and continue where your last
+      hand left off.
+    </p>
+
+    <form #loginForm="ngForm" (ngSubmit)="login()" class="form">
+      <label>
+        Username
+        <input
+          type="text"
+          name="username"
+          [(ngModel)]="username"
+          required
+          placeholder="naruto_player"
+        />
+      </label>
+
+      <label>
+        Password
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          placeholder="Your secure password"
+        />
+      </label>
+
+      <button type="submit" [disabled]="loginForm.invalid || loading">
+        {{ loading ? 'Signing you in...' : 'Enter Casino' }}
+      </button>
+    </form>
+
+    @if (errorMessage) {
+      <p class="feedback error">{{ errorMessage }}</p>
+    }
+  </article>
+
+  <article class="side-card">
+    <p class="eyebrow">Members only</p>
+    <h2>Everything you need is one sign-in away</h2>
+    <ul>
+      <li>Resume active blackjack sessions instantly</li>
+      <li>Access your cashier and top-up controls</li>
+      <li>Track every wager, payout and result in history</li>
+    </ul>
+    <a [routerLink]="'/register'">Create a new player account</a>
+  </article>
+</section>

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-w_+v30_9*t945g8e4b!%qqm1e_-_7idh@m#e$lo*kxwb8a_gj#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'testserver']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'games.apps.GamesConfig',
     'wallet',
     'users.apps.UsersConfig',
 ]
@@ -127,6 +128,8 @@ STATIC_URL = 'static/'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
 ]
 CORS_ALLOW_CREDENTIALS = True
 

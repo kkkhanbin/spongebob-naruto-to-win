@@ -1,0 +1,77 @@
+<section class="auth-layout">
+  <article class="form-card">
+    <p class="eyebrow">Create account</p>
+    <h1>Open your player profile</h1>
+    <p class="description">
+      Claim your starting chips, unlock the blackjack table and keep every
+      session under one account.
+    </p>
+
+    <form #registerForm="ngForm" (ngSubmit)="register()" class="form">
+      <label>
+        Username
+        <input
+          type="text"
+          name="username"
+          [(ngModel)]="username"
+          required
+          minlength="3"
+          placeholder="Choose your player name"
+        />
+      </label>
+
+      <label>
+        Email
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          required
+          placeholder="player@example.com"
+        />
+      </label>
+
+      <label>
+        Password
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          minlength="8"
+          placeholder="Minimum 8 characters"
+        />
+      </label>
+
+      <label>
+        Confirm password
+        <input
+          type="password"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          required
+          placeholder="Repeat password"
+        />
+      </label>
+
+      <button type="submit" [disabled]="registerForm.invalid || loading">
+        {{ loading ? 'Creating your profile...' : 'Create Account' }}
+      </button>
+    </form>
+
+    @if (errorMessage) {
+      <p class="feedback error">{{ errorMessage }}</p>
+    }
+  </article>
+
+  <article class="side-card">
+    <p class="eyebrow">Starter perks</p>
+    <h2>Walk in ready to play</h2>
+    <ul>
+      <li>Starting balance issued automatically on registration</li>
+      <li>Fast JWT session for returning access</li>
+      <li>Wallet history and blackjack records attached to your account</li>
+    </ul>
+    <a [routerLink]="'/login'">Already have an account?</a>
+  </article>
+</section>

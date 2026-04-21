@@ -1,0 +1,160 @@
+@if (!isAuthenticated) {
+  <section class="locked">
+    <div class="locked-card">
+      <p class="eyebrow">Private table</p>
+      <h1>Sign in to sit at the blackjack table.</h1>
+      <p>
+        Your cards, balance and game history stay attached to your player account.
+      </p>
+      <div class="actions">
+        <a routerLink="/login" class="primary">Sign In</a>
+        <a routerLink="/register" class="secondary">Create Account</a>
+      </div>
+    </div>
+  </section>
+} @else {
+  <section class="table-layout">
+    <article class="table-panel">
+      <div class="table-header">
+        <div>
+          <p class="eyebrow">Royal Blackjack</p>
+          <h1>Play the next hand</h1>
+        </div>
+        <button type="button" class="ghost" (click)="refreshTable()" [disabled]="loading">
+          Refresh Table
+        </button>
+      </div>
+
+      <form class="bet-strip" #betForm="ngForm" (ngSubmit)="startHand()">
+        <label>
+          Bet
+          <input
+            type="number"
+            step="0.01"
+            min="1"
+            name="betAmount"
+            [(ngModel)]="betAmount"
+            [disabled]="loading || !!session && session.status !== 'finished'"
+          />
+        </label>
+
+        <label>
+          Client seed
+          <input
+            type="text"
+            name="clientSeed"
+            [(ngModel)]="clientSeed"
+            [disabled]="loading || !!session && session.status !== 'finished'"
+            placeholder="Optional fairness seed"
+          />
+        </label>
+
+        <button
+          type="submit"
+          [disabled]="betForm.invalid || loading || (!!session && session.status !== 'finished')"
+        >
+          {{ loading ? 'Dealing...' : 'Deal Cards' }}
+        </button>
+      </form>
+
+      @if (errorMessage) {
+        <p class="feedback error">{{ errorMessage }}</p>
+      }
+
+      <div class="felt">
+        <section class="dealer-row">
+          <div class="row-head">
+            <h2>Dealer</h2>
+            @if (session) {
+              <span>Total: {{ session.dealer_total }}</span>
+            }
+          </div>
+
+          <div class="cards">
+            @if (session; as currentSession) {
+              @for (card of currentSession.dealer_cards; track card + $index) {
+                <div class="card">{{ card }}</div>
+              }
+            } @else {
+              <div class="placeholder">Waiting for first deal</div>
+            }
+          </div>
+        </section>
+
+        <section class="player-zone">
+          <div class="row-head">
+            <h2>Your Hands</h2>
+            @if (session) {
+              <span>
+                Total wagered: {{ session.total_wagered }} | Payout: {{ session.payout_amount }}
+              </span>
+            }
+          </div>
+
+          @if (session; as currentSession) {
+            <div class="hands-grid">
+              @for (hand of currentSession.player_hands; track $index) {
+                <article
+                  class="hand-card"
+                  [class.active]="currentSession.status === 'player_turn' && currentSession.current_hand_index === $index"
+                >
+                  <div class="hand-meta">
+                    <strong>Hand {{ $index + 1 }}</strong>
+                    <span>{{ formatOutcome(hand.status) }} | Total {{ handTotal(hand.cards) }}</span>
+                  </div>
+
+                  <div class="cards">
+                    @for (card of hand.cards; track card + $index) {
+                      <div class="card">{{ card }}</div>
+                    }
+                  </div>
+
+                  <div class="hand-footer">
+                    <span>Bet {{ hand.bet_amount }}</span>
+                    <span>Result {{ hand.result || 'pending' }}</span>
+                    <span>Payout {{ hand.payout }}</span>
+                  </div>
+                </article>
+              }
+            </div>
+          } @else {
+            <div class="empty-state">
+              Set your stake, deal the cards and take the next decision from the felt.
+            </div>
+          }
+        </section>
+      </div>
+    </article>
+
+    <article class="side-panel">
+      <p class="eyebrow">Action rail</p>
+      <h2>Control the hand</h2>
+
+      <div class="action-grid">
+        @if (session; as currentSession) {
+          @if (currentSession.available_actions.length) {
+            @for (action of currentSession.available_actions; track action) {
+              <button type="button" (click)="sendAction(action)" [disabled]="loading">
+                {{ action }}
+              </button>
+            }
+          } @else {
+            <div class="action-empty">Available actions will appear once a hand is in play.</div>
+          }
+        } @else {
+          <div class="action-empty">Available actions will appear once a hand is in play.</div>
+        }
+      </div>
+
+      @if (session) {
+        <div class="result-panel">
+          <strong>{{ session.result_message || 'Hand in progress' }}</strong>
+          <span>Seed hash: {{ session.server_seed_hash }}</span>
+          @if (session.show_server_seed) {
+            <span>Server seed: {{ session.show_server_seed }}</span>
+          }
+        </div>
+      }
+    </article>
+  </section>
+}

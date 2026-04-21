@@ -1,0 +1,75 @@
+<section class="dashboard-layout">
+  <article class="panel">
+    <p class="eyebrow">Protected area</p>
+    <h1>Dashboard</h1>
+    <p class="description">
+      This page demonstrates the JWT interceptor. After login, every wallet
+      request automatically includes the bearer token.
+    </p>
+
+    <div class="status-banner" [class.offline]="!hasToken">
+      <strong>{{ hasToken ? 'JWT token detected' : 'No JWT token found' }}</strong>
+      <span>
+        {{ hasToken ? 'You can call protected wallet endpoints now.' : 'Login first to access /api/wallet/.' }}
+      </span>
+    </div>
+
+    <div class="button-grid">
+      @for (button of requestButtons; track button.label) {
+        <button type="button" (click)="loadWallet(button.label)" [disabled]="loading || !hasToken">
+          <strong>{{ button.label }}</strong>
+          <span>{{ button.description }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="logout-row">
+      <button type="button" class="logout" (click)="logout()">Logout</button>
+    </div>
+
+    @if (errorMessage) {
+      <p class="feedback error">{{ errorMessage }}</p>
+    }
+
+    @if (successMessage) {
+      <p class="feedback success">{{ successMessage }}</p>
+    }
+  </article>
+
+  <article class="panel">
+    <p class="eyebrow">Wallet response</p>
+    <h2>Balance preview</h2>
+
+    @if (wallet; as currentWallet) {
+      <div class="wallet-grid">
+        <div class="wallet-card">
+          <span>Main balance</span>
+          <strong>{{ currentWallet.balance }}</strong>
+        </div>
+        <div class="wallet-card">
+          <span>Bonus balance</span>
+          <strong>{{ currentWallet.bonus_balance }}</strong>
+        </div>
+        <div class="wallet-card">
+          <span>Currency</span>
+          <strong>{{ currentWallet.currency }}</strong>
+        </div>
+      </div>
+    } @else {
+      <p class="empty-state">
+        Wallet data will appear here after a successful protected request.
+      </p>
+    }
+
+    <div class="notes">
+      <div>
+        <strong>Click event 3</strong>
+        <p>Load wallet button sends one API request.</p>
+      </div>
+      <div>
+        <strong>Click event 4</strong>
+        <p>Refresh wallet button sends another API request.</p>
+      </div>
+    </div>
+  </article>
+</section>

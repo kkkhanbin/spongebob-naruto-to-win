@@ -1,0 +1,153 @@
+:host {
+  display: block;
+}
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 20px;
+}
+
+.panel {
+  padding: 28px;
+  border-radius: 28px;
+  background: rgba(7, 28, 35, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #f6dca3;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.8rem;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 2.8rem;
+  margin-bottom: 14px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 14px;
+}
+
+.description,
+.empty-state,
+.notes p {
+  color: #baccce;
+  line-height: 1.7;
+}
+
+.status-banner {
+  display: grid;
+  gap: 6px;
+  margin-top: 20px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(111, 221, 203, 0.12);
+  color: #bffff0;
+}
+
+.status-banner.offline {
+  background: rgba(255, 127, 110, 0.14);
+  color: #ffc3ba;
+}
+
+.button-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.button-grid button,
+.logout {
+  width: 100%;
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f5efe3;
+  cursor: pointer;
+}
+
+.button-grid button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.button-grid span {
+  color: #baccce;
+}
+
+.logout-row {
+  margin-top: 16px;
+}
+
+.logout {
+  background: rgba(247, 178, 77, 0.16);
+  color: #f5efe3;
+}
+
+.feedback {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 16px;
+}
+
+.error {
+  background: rgba(255, 127, 110, 0.14);
+  color: #ffc3ba;
+}
+
+.success {
+  background: rgba(111, 221, 203, 0.14);
+  color: #bffff0;
+}
+
+.wallet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.wallet-card,
+.notes div {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wallet-card span {
+  display: block;
+  color: #baccce;
+  margin-bottom: 8px;
+}
+
+.wallet-card strong {
+  font-size: 1.4rem;
+}
+
+.notes {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-layout,
+  .wallet-grid {
+    grid-template-columns: 1fr;
+  }
+}

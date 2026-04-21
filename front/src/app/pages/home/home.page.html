@@ -1,0 +1,39 @@
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Spongebob Naruto Casino</p>
+    <h1>Step into the lobby and play the next hand your way.</h1>
+    <p class="lead">
+      Premium blackjack tables, instant wallet access and transparent game
+      history come together in one casino floor designed for fast, fair play.
+    </p>
+
+    <div class="actions">
+      <a routerLink="/blackjack" class="primary">Enter Blackjack</a>
+      <a routerLink="/cashier" class="secondary">Open Cashier</a>
+    </div>
+  </div>
+
+  <div class="hero-panel">
+    <p class="eyebrow">Tonight's spotlight</p>
+    <h2>Fair tables, instant actions and a visible ledger for every chip you move.</h2>
+    <div class="highlight-list">
+      @for (item of highlights; track item) {
+        <div class="highlight-item">
+          <span class="dot"></span>
+          <p>{{ item }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="game-grid">
+  @for (game of featuredGames; track game.name) {
+    <article class="game-card">
+      <span class="accent">{{ game.accent }}</span>
+      <h3>{{ game.name }}</h3>
+      <p>{{ game.text }}</p>
+      <a [routerLink]="game.route">Explore</a>
+    </article>
+  }
+</section>

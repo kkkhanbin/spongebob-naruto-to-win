@@ -17,11 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
         decimal_places=2,
         read_only=True
     )
-    kyc_status = serializers.CharField(
-        source='kyc.status',
-        read_only=True
-    )
-
     class Meta:
         model = User
         fields = [
@@ -32,7 +27,6 @@ class UserSerializer(serializers.ModelSerializer):
             'is_banned',
             'balance',
             'bonus_balance',
-            'kyc_status',
             'created_at'
         ]
         read_only_fields = fields

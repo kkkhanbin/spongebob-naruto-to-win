@@ -1,0 +1,113 @@
+@if (!isAuthenticated) {
+  <section class="locked">
+    <div class="locked-card">
+      <p class="eyebrow">Private cashier</p>
+      <h1>Sign in to access your wallet and history.</h1>
+      <p>Balance movements, top-ups and game records are available for registered players only.</p>
+      <div class="actions">
+        <a routerLink="/login" class="primary">Sign In</a>
+        <a routerLink="/register" class="secondary">Create Account</a>
+      </div>
+    </div>
+  </section>
+} @else {
+  <section class="cashier-layout">
+    <article class="panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">Cashier</p>
+          <h1>Your wallet</h1>
+        </div>
+        <button type="button" class="ghost" (click)="loadCashier()" [disabled]="loading">
+          Refresh
+        </button>
+      </div>
+
+      <div class="wallet-grid">
+        <div class="wallet-card">
+          <span>Main Balance</span>
+          <strong>{{ wallet?.balance || '0.00' }}</strong>
+        </div>
+        <div class="wallet-card">
+          <span>Bonus Balance</span>
+          <strong>{{ wallet?.bonus_balance || '0.00' }}</strong>
+        </div>
+        <div class="wallet-card">
+          <span>Currency</span>
+          <strong>{{ wallet?.currency || 'USD' }}</strong>
+        </div>
+      </div>
+
+      <form class="topup-row" #topupForm="ngForm" (ngSubmit)="topUp()">
+        <label>
+          Add chips
+          <input type="number" min="1" step="0.01" name="topUpAmount" [(ngModel)]="topUpAmount" />
+        </label>
+        <button type="submit" [disabled]="topupForm.invalid || loading">Top Up</button>
+      </form>
+
+      @if (errorMessage) {
+        <p class="feedback error">{{ errorMessage }}</p>
+      }
+
+      @if (successMessage) {
+        <p class="feedback success">{{ successMessage }}</p>
+      }
+
+      @if (profile) {
+        <div class="profile-card">
+          <strong>{{ profile.username }}</strong>
+          <span>{{ profile.email }}</span>
+          <span>Member since {{ profile.created_at | date: 'mediumDate' }}</span>
+        </div>
+      }
+    </article>
+
+    <article class="panel">
+      <p class="eyebrow">Recent transactions</p>
+      <h2>Wallet activity</h2>
+
+      <div class="list">
+        @for (item of transactions; track item.id) {
+          <div class="list-row">
+            <div>
+              <strong>{{ item.description }}</strong>
+              <p>{{ item.kind }} • {{ item.created_at | date: 'short' }}</p>
+            </div>
+            <div class="amount">
+              <strong>{{ item.signed_amount }}</strong>
+              <span>Balance {{ item.balance_after }}</span>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-state">No transactions yet.</div>
+        }
+      </div>
+    </article>
+
+    <article class="panel full-span">
+      <p class="eyebrow">Blackjack history</p>
+      <h2>Latest hands</h2>
+
+      <div class="list">
+        @for (hand of history; track hand.id) {
+          <div class="list-row">
+            <div>
+              <strong>{{ hand.result_message || 'Hand complete' }}</strong>
+              <p>
+                Wager {{ hand.total_wagered }} • Payout {{ hand.payout_amount }} •
+                {{ (hand.finished_at || hand.created_at) | date: 'short' }}
+              </p>
+            </div>
+            <div class="amount">
+              <strong>{{ hand.net_result }}</strong>
+              <span>{{ hand.outcome }}</span>
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-state">Your completed hands will appear here.</div>
+        }
+      </div>
+    </article>
+  </section>
+}

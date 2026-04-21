@@ -10,4 +10,4 @@ User = settings.AUTH_USER_MODEL
 @receiver(post_save, sender=User)
 def create_wallet(sender, instance, created, **kwargs):
     if created:
-        Wallet.objects.create(user=instance)
+        Wallet.objects.create(user=instance, balance=1000)
