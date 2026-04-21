@@ -1,0 +1,55 @@
+<section class="auth-layout" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+  <article class="auth-card">
+    <div class="auth-card__header">
+      <p class="eyebrow">Secure Access</p>
+      <h1>Member Login</h1>
+      <p>Enter your credentials to access the gaming floor.</p>
+    </div>
+
+    <div class="tabs">
+      <button type="button" [class.active]="activePanel === 'login'" (click)="switchPanel('login')">Sign In</button>
+      <button type="button" [class.active]="activePanel === 'register'" (click)="switchPanel('register')">Register</button>
+    </div>
+
+    @if (registerSuccess) {
+      <p class="success">{{ registerSuccess }}</p>
+    }
+
+    @if (activePanel === 'login') {
+      <form class="auth-form" (ngSubmit)="submitLogin()">
+        <label>
+          Username
+          <input type="text" name="username" [(ngModel)]="loginForm.username" placeholder="Enter username" required />
+        </label>
+
+        <label>
+          Password
+          <input type="password" name="password" [(ngModel)]="loginForm.password" placeholder="••••••••" required />
+        </label>
+
+        <button class="submit" type="submit" [disabled]="isSubmittingLogin">
+          {{ isSubmittingLogin ? 'Authorizing...' : 'Sign In to Play' }}
+        </button>
+      </form>
+    } @else {
+      <form class="auth-form" (ngSubmit)="submitRegister()">
+        <label>
+          Username
+          <input type="text" name="registerUsername" [(ngModel)]="registerForm.username" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="registerEmail" [(ngModel)]="registerForm.email" required />
+        </label>
+        <label>
+          Password
+          <input type="password" name="registerPassword" [(ngModel)]="registerForm.password" required />
+        </label>
+
+        <button class="submit" type="submit" [disabled]="isSubmittingRegister">
+          {{ isSubmittingRegister ? 'Creating Account...' : 'Create Player Profile' }}
+        </button>
+      </form>
+    }
+  </article>
+</section>

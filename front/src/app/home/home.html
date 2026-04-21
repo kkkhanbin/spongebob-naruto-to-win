@@ -1,0 +1,72 @@
+<section class="hero card">
+  <div class="hero__copy">
+    <p class="eyebrow">Welcome to the Club</p>
+    <h1>Experience the Thrill of Premium Gaming</h1>
+    <p class="lead">
+      Join thousands of players in the most secure and exciting online casino. 
+      Enjoy instant deposits, fast withdrawals, and world-class support.
+    </p>
+
+    <div class="hero__actions">
+      @if (!authService.isLoggedIn()) {
+        <a class="cta cta--primary" routerLink="/login">Join Now & Get Bonus</a>
+      } @else {
+        <button class="cta cta--primary" type="button" (click)="openProfile()">My Account</button>
+      }
+      <button class="cta cta--secondary" type="button" (click)="openRoulette()">Play Roulette</button>
+      <button class="cta cta--secondary" type="button" (click)="openLotto()">Play Lotto</button>
+    </div>
+  </div>
+
+  <div class="hero__panel">
+    <h2>Current Jackpot</h2>
+    <div class="feature-list">
+      <div class="feature-item" style="font-size: 2rem; color: var(--accent); font-weight: 800;">
+        $1,245,800.00
+      </div>
+      <div class="feature-item">Daily Tournaments Active</div>
+      <div class="feature-item">VIP Cashback: 15%</div>
+    </div>
+  </div>
+</section>
+
+@if (authService.isLoggedIn()) {
+  <section class="dashboard-grid">
+    <article class="card info-card">
+      <div class="card__header">
+        <h2>Quick Balance</h2>
+        <button class="mini-button" type="button" (click)="loadDashboard()">Refresh</button>
+      </div>
+
+      @if (loading) {
+        <p class="muted">Syncing wallet data...</p>
+      } @else {
+        <p class="balance-label">Available Funds</p>
+        <p class="balance-value">${{ wallet?.balance ?? '0.00' }}</p>
+      }
+    </article>
+
+    <article class="card info-card">
+      <div class="card__header">
+        <h2>Recent Activity</h2>
+        <a routerLink="/profile">View All</a>
+      </div>
+
+      @if (recentGames.length) {
+        <div class="history-list">
+          @for (game of recentGames; track game.id) {
+            <div class="history-item">
+              <strong>{{ game.game | titlecase }}</strong>
+              <span [style.color]="game.payout !== '0.00' ? '#4ade80' : '#f87171'">
+                {{ game.payout !== '0.00' ? 'WIN' : 'LOSS' }}
+              </span>
+              <small>Bet: ${{ game.amount }} | Won: ${{ game.payout }}</small>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="muted">No recent bets found.</p>
+      }
+    </article>
+  </section>
+}

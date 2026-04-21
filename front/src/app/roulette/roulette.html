@@ -1,0 +1,50 @@
+<section class="game-layout">
+  <article class="card game-card">
+    <div class="panel__header">
+      <div>
+        <p class="eyebrow">Roulette</p>
+        <h1>Ставка на цвет или чётность</h1>
+      </div>
+      <a class="text-link" routerLink="/profile">К профилю</a>
+    </div>
+
+    <form class="game-form" (ngSubmit)="play()">
+      <label>
+        Тип ставки
+        <select name="betType" [(ngModel)]="bet.bet_type">
+          @for (betType of betTypes; track betType) {
+            <option [value]="betType">{{ betType }}</option>
+          }
+        </select>
+      </label>
+
+      <label>
+        Сумма ставки
+        <input type="number" min="1" name="amount" [(ngModel)]="bet.amount" required />
+      </label>
+
+      <button class="submit" type="submit" [disabled]="spinning">
+        {{ spinning ? 'Крутим...' : 'Сделать ставку' }}
+      </button>
+    </form>
+
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+  </article>
+
+  <article class="card result-card">
+    <h2>Результат раунда</h2>
+
+    @if (result) {
+      <div class="roulette-ball">{{ result.result }}</div>
+      <p class="result-status" [class.result-status--win]="result.win" [class.result-status--lose]="!result.win">
+        {{ result.win ? 'Победа' : 'Не повезло' }}
+      </p>
+      <p>Выплата: <strong>${{ result.payout }}</strong></p>
+      <p>Новый баланс: <strong>${{ result.balance }}</strong></p>
+    } @else {
+      <p class="muted">Сделайте ставку, чтобы получить результат от API.</p>
+    }
+  </article>
+</section>

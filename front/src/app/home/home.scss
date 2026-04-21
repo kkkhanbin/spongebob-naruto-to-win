@@ -1,0 +1,135 @@
+.hero,
+.dashboard-grid,
+.stats-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.hero {
+  grid-template-columns: 1.3fr 0.9fr;
+  padding: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.hero__copy h1 {
+  margin: 0.3rem 0 1rem;
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  line-height: 1.05;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+}
+
+.lead {
+  max-width: 62ch;
+  color: var(--muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.cta,
+.mini-button {
+  border: 0;
+  border-radius: 1rem;
+  padding: 0.9rem 1.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: #08111f;
+  font-weight: 700;
+}
+
+.cta--primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+}
+
+.cta--secondary,
+.mini-button {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f7f9ff;
+}
+
+.feature-list,
+.history-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.feature-item,
+.history-item {
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.stats-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 1.25rem;
+}
+
+.stat {
+  padding: 1.4rem;
+}
+
+.stat span,
+.balance-label,
+.muted {
+  color: var(--muted);
+}
+
+.stat strong,
+.balance-value {
+  display: block;
+  margin: 0.35rem 0;
+  font-size: 2rem;
+}
+
+.dashboard-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.info-card {
+  padding: 1.5rem;
+}
+
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.error-banner {
+  margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .stats-grid,
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 1.25rem;
+  }
+}
+
+.balance-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f3c623 0%, #ffefba 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0.5rem 0;
+}
