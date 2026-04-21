@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -20,7 +20,10 @@ export class Roulette {
 
   readonly betTypes: Array<RouletteBet['bet_type']> = ['red', 'black', 'even', 'odd'];
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly cdr: ChangeDetectorRef,
+  ) {}
 
   play() {
     this.spinning = true;
@@ -29,12 +32,15 @@ export class Roulette {
     this.apiService.playRoulette(this.bet).subscribe({
       next: (res) => {
         this.result = res;
+        this.cdr.detectChanges();
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
+        this.cdr.detectChanges();
       },
       complete: () => {
         this.spinning = false;
+        this.cdr.detectChanges();
       },
     });
   }

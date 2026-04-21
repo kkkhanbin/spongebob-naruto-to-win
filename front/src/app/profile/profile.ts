@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -22,7 +22,10 @@ export class Profile implements OnInit {
   depositAmount = 100;
   birthDateDraft = '';
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
     this.refreshAll();
@@ -42,10 +45,12 @@ export class Profile implements OnInit {
       next: (user) => {
         this.user = user;
         this.birthDateDraft = user.birth_date ?? '';
+        this.cdr.detectChanges();
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
         this.loading = false;
+        this.cdr.detectChanges();
       },
     });
   }
@@ -54,10 +59,12 @@ export class Profile implements OnInit {
     this.apiService.getWallet().subscribe({
       next: (wallet) => {
         this.wallet = wallet;
+        this.cdr.detectChanges();
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
         this.loading = false;
+        this.cdr.detectChanges();
       },
     });
   }
@@ -67,10 +74,12 @@ export class Profile implements OnInit {
       next: (history) => {
         this.gameHistory = history;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
         this.loading = false;
+        this.cdr.detectChanges();
       },
     });
   }
@@ -83,9 +92,11 @@ export class Profile implements OnInit {
       next: (wallet) => {
         this.wallet = wallet;
         this.successMessage = `Баланс пополнен на $${this.depositAmount}.`;
+        this.cdr.detectChanges();
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
+        this.cdr.detectChanges();
       },
     });
   }
@@ -103,9 +114,11 @@ export class Profile implements OnInit {
           this.user = user;
           this.birthDateDraft = user.birth_date ?? '';
           this.successMessage = 'Дата рождения обновлена.';
+          this.cdr.detectChanges();
         },
         error: (error: Error) => {
           this.errorMessage = error.message;
+          this.cdr.detectChanges();
         },
       });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
@@ -29,6 +29,7 @@ export class Home implements OnInit {
     public readonly authService: AuthService,
     private readonly apiService: ApiService,
     private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -44,9 +45,11 @@ export class Home implements OnInit {
     this.apiService.getWallet().subscribe({
       next: (wallet) => {
         this.wallet = wallet;
+        this.cdr.detectChanges();
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
+        this.cdr.detectChanges();
       },
     });
 
@@ -54,10 +57,12 @@ export class Home implements OnInit {
       next: (history) => {
         this.recentGames = history.slice(0, 3);
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
         this.loading = false;
+        this.cdr.detectChanges();
       },
     });
   }

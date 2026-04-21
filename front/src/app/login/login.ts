@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -27,6 +27,7 @@ export class Login {
     private readonly authService: AuthService,
     private readonly apiService: ApiService,
     private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   switchPanel(panel: 'login' | 'register', clearSuccess = true) {
@@ -50,9 +51,11 @@ export class Login {
       error: (error: Error) => {
         this.loginError = error.message;
         this.isSubmittingLogin = false;
+        this.cdr.detectChanges();
       },
       complete: () => {
         this.isSubmittingLogin = false;
+        this.cdr.detectChanges();
       },
     });
   }
@@ -73,13 +76,16 @@ export class Login {
         this.registerSuccess = 'Account created';
         this.loginForm.username = this.registerForm.username;
         this.registerForm = { username: '', email: '', birth_date: null, password: '' };
+        this.cdr.detectChanges();
       },
       error: (error: Error) => {
         this.registerError = error.message;
         this.isSubmittingRegister = false;
+        this.cdr.detectChanges();
       },
       complete: () => {
         this.isSubmittingRegister = false;
+        this.cdr.detectChanges();
       },
     });
   }
