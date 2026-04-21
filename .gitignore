@@ -31,3 +31,6 @@ Thumbs.db
 *.angular/
 *.vscode/
 node_modules/
+
+__pycache__/
+*.pyc
