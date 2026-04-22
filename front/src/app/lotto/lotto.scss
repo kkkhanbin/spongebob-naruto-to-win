@@ -1,16 +1,25 @@
 .lotto-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
   gap: 1.25rem;
 }
 
 .lotto-card,
 .result-card {
-  padding: 1.5rem;
+  padding: 1.6rem;
+}
+
+.lotto-card {
+  background:
+    radial-gradient(circle at top left, rgba(103, 232, 249, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(16, 23, 39, 0.94), rgba(10, 15, 27, 0.92));
 }
 
 .result-card {
   overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(255, 224, 102, 0.12), transparent 30%),
+    linear-gradient(180deg, rgba(21, 24, 47, 0.94), rgba(10, 13, 27, 0.92));
 }
 
 .panel__header,
@@ -19,6 +28,36 @@
   justify-content: space-between;
   gap: 1rem;
   align-items: center;
+}
+
+.panel__header {
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.table-copy {
+  max-width: 54ch;
+  color: var(--muted);
+}
+
+.table-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.table-highlights span,
+.text-link {
+  padding: 0.6rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.text-link {
+  text-decoration: none;
+  color: #f8fbff;
 }
 
 .selected-strip {
@@ -32,17 +71,17 @@
 .selected-strip span {
   display: grid;
   place-items: center;
-  min-width: 2.5rem;
-  height: 2.5rem;
+  min-width: 2.7rem;
+  height: 2.7rem;
   padding: 0 0.6rem;
   border-radius: 999px;
-  font-weight: 700;
+  font-weight: 800;
   background: rgba(255, 255, 255, 0.08);
 }
 
 .selected-strip--result span {
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  color: #07101d;
+  background: linear-gradient(135deg, #ffe066, #ff8c42 58%, #ff4d6d);
+  color: #160b14;
 }
 
 .selected-strip--result {
@@ -58,17 +97,18 @@
 
 .number-grid button {
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.9rem;
-  padding: 0.85rem 0;
+  border-radius: 1rem;
+  padding: 0.9rem 0;
   color: #f7f9ff;
   background: rgba(255, 255, 255, 0.04);
   cursor: pointer;
+  font-weight: 700;
 }
 
 .number-grid button.selected {
-  color: #07101d;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #160b14;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffe066, #ff8c42 58%, #ff4d6d);
 }
 
 .lotto-form {
@@ -85,7 +125,7 @@
 .lotto-form input {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 1rem;
-  padding: 0.9rem 1rem;
+  padding: 0.95rem 1rem;
   background: rgba(5, 12, 22, 0.78);
   color: #f7f9ff;
 }
@@ -94,14 +134,14 @@
 .secondary {
   border: 0;
   border-radius: 1rem;
-  padding: 0.9rem 1rem;
+  padding: 0.95rem 1rem;
   cursor: pointer;
+  font-weight: 800;
 }
 
 .submit {
-  font-weight: 800;
-  color: #07101d;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #160b14;
+  background: linear-gradient(135deg, #ffe066, #ff8c42 58%, #ff4d6d);
 }
 
 .secondary {
@@ -216,11 +256,11 @@
 }
 
 .result-status--win {
-  color: #4ade80;
+  color: #67e8f9;
 }
 
 .result-status--lose {
-  color: #fca5a5;
+  color: #ffb2c1;
 }
 
 @keyframes lotto-track {

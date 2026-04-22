@@ -1,16 +1,25 @@
 .game-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
   gap: 1.25rem;
 }
 
 .game-card,
 .result-card {
-  padding: 1.5rem;
+  padding: 1.6rem;
+}
+
+.game-card {
+  background:
+    radial-gradient(circle at top left, rgba(255, 77, 109, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(18, 23, 39, 0.94), rgba(10, 15, 27, 0.92));
 }
 
 .result-card {
   overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(255, 224, 102, 0.15), transparent 28%),
+    linear-gradient(180deg, rgba(22, 18, 35, 0.94), rgba(10, 12, 23, 0.92));
 }
 
 .panel__header {
@@ -19,6 +28,31 @@
   gap: 1rem;
   align-items: start;
   margin-bottom: 1rem;
+}
+
+.table-copy {
+  max-width: 54ch;
+  color: var(--muted);
+}
+
+.table-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.table-highlights span,
+.text-link {
+  padding: 0.6rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.text-link {
+  text-decoration: none;
+  color: #f8fbff;
 }
 
 .game-form {
@@ -36,7 +70,7 @@
 .game-form select {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 1rem;
-  padding: 0.9rem 1rem;
+  padding: 0.95rem 1rem;
   background: rgba(5, 12, 22, 0.78);
   color: #f7f9ff;
 }
@@ -44,11 +78,11 @@
 .submit {
   border: 0;
   border-radius: 1rem;
-  padding: 0.95rem 1rem;
+  padding: 0.98rem 1rem;
   cursor: pointer;
-  font-weight: 800;
-  color: #07101d;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  font-weight: 900;
+  color: #160b14;
+  background: linear-gradient(135deg, #ffe066, #ff8c42 58%, #ff4d6d);
 }
 
 .roulette-ball {
@@ -61,7 +95,7 @@
   font-size: 2rem;
   font-weight: 800;
   color: #fff;
-  background: radial-gradient(circle at 30% 30%, #f87171, #991b1b 70%);
+  background: radial-gradient(circle at 30% 30%, #ff8b8b, #991b1b 70%);
   box-shadow: 0 25px 45px rgba(248, 113, 113, 0.3);
 }
 
@@ -69,7 +103,7 @@
   display: grid;
   place-items: center;
   gap: 0.85rem;
-  min-height: 18rem;
+  min-height: 20rem;
   text-align: center;
 }
 
@@ -144,11 +178,11 @@
 }
 
 .result-status--win {
-  color: #4ade80;
+  color: #67e8f9;
 }
 
 .result-status--lose {
-  color: #fca5a5;
+  color: #ffb2c1;
 }
 
 @keyframes roulette-wheel-spin {

@@ -1,9 +1,10 @@
 <section class="profile-grid">
-  <article class="card panel">
+  <article class="card panel panel--hero">
     <div class="panel__header">
       <div>
-        <p class="eyebrow">Player Profile</p>
+        <p class="eyebrow">Player Lounge</p>
         <h1>{{ user?.username ?? 'Player' }}</h1>
+        <p class="panel__lead">Your private casino suite for account details, wallet actions, and session history.</p>
       </div>
       <button class="mini-button" type="button" (click)="refreshAll()">Refresh Data</button>
     </div>
@@ -23,8 +24,8 @@
           <strong>{{ user.is_verified ? 'Verified' : 'Not Verified' }}</strong>
         </div>
         <div>
-          <span>Route</span>
-          <strong>/profile</strong>
+          <span>Casino Access</span>
+          <strong>Premium Member Floor</strong>
         </div>
       </div>
     } @else if (loading) {
@@ -40,13 +41,19 @@
     }
   </article>
 
-  <article class="card panel">
+  <article class="card panel panel--wallet">
     <div class="panel__header">
       <div>
-        <p class="eyebrow">Wallet</p>
+        <p class="eyebrow">Wallet Vault</p>
         <h2>${{ wallet?.balance ?? '0.00' }}</h2>
       </div>
-      <a class="text-link" routerLink="/roulette">Go to Game</a>
+      <a class="text-link" routerLink="/roulette">Go to Tables</a>
+    </div>
+
+    <div class="wallet-highlights">
+      <span>Instant top-ups</span>
+      <span>Protected balance</span>
+      <span>Live sync</span>
     </div>
 
     <form class="wallet-form" (ngSubmit)="depositFunds()">
@@ -62,12 +69,12 @@
 <section class="card panel panel--compact">
   <div class="panel__header">
     <div>
-      <p class="eyebrow">Birth Date</p>
+      <p class="eyebrow">Identity</p>
       <h2>Update Birth Date</h2>
     </div>
   </div>
 
-  <form class="wallet-form" (ngSubmit)="updateBirthDate()">
+  <form class="wallet-form wallet-form--inline" (ngSubmit)="updateBirthDate()">
     <label>
       Birth Date
       <input type="date" name="birthDateDraft" [(ngModel)]="birthDateDraft" />
@@ -79,7 +86,7 @@
 <section class="card panel">
   <div class="panel__header">
     <div>
-      <p class="eyebrow">Game History</p>
+      <p class="eyebrow">Session Log</p>
       <h2>Game History</h2>
     </div>
     <button class="mini-button" type="button" (click)="loadGameHistory()">Refresh History</button>

@@ -2,10 +2,17 @@
   <article class="card game-card">
     <div class="panel__header">
       <div>
-        <p class="eyebrow">Roulette</p>
+        <p class="eyebrow">Roulette Royale</p>
         <h1>Bet on Color or Parity</h1>
+        <p class="table-copy">A neon-lit quick table with fast spins, live animation, and instant payout reveals.</p>
       </div>
-      <a class="text-link" routerLink="/profile">Back to Profile</a>
+      <a class="text-link" routerLink="/profile">Player Lounge</a>
+    </div>
+
+    <div class="table-highlights">
+      <span>Live Wheel</span>
+      <span>Color Bets</span>
+      <span>Parity Bets</span>
     </div>
 
     <form class="game-form" (ngSubmit)="play()">
@@ -34,6 +41,7 @@
   </article>
 
   <article class="card result-card">
+    <p class="eyebrow">Spin Feed</p>
     <h2>Round Result</h2>
 
     @if (spinning) {

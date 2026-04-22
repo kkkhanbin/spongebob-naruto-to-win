@@ -1,72 +1,139 @@
-<section class="hero card">
-  <div class="hero__copy">
-    <p class="eyebrow">Welcome to the Club</p>
-    <h1>Experience the Thrill of Premium Gaming</h1>
+<section class="lobby-hero card">
+  <div class="lobby-hero__copy">
+    <p class="eyebrow">Main Lobby</p>
+    <h1>Spongebob, Patrick and Naruto Are Running Tonight's Casino Floor</h1>
     <p class="lead">
-      Join thousands of players in the most secure and exciting online casino. 
-      Enjoy instant deposits, fast withdrawals, and world-class support.
+      Step into the main lobby, pick your game table, and move between roulette, lotto, wallet actions, and profile tools
+      from one casino hub.
     </p>
 
-    <div class="hero__actions">
+    <div class="hero-actions">
       @if (!authService.isLoggedIn()) {
-        <a class="cta cta--primary" routerLink="/login">Join Now & Get Bonus</a>
+        <a class="cta cta--primary" routerLink="/login">Claim Welcome Bonus</a>
       } @else {
-        <button class="cta cta--primary" type="button" (click)="openProfile()">My Account</button>
+        <button class="cta cta--primary" type="button" (click)="openProfile()">Open Player Lounge</button>
       }
-      <button class="cta cta--secondary" type="button" (click)="openRoulette()">Play Roulette</button>
-      <button class="cta cta--secondary" type="button" (click)="openLotto()">Play Lotto</button>
     </div>
   </div>
 
-  <div class="hero__panel">
-    <h2>Current Jackpot</h2>
-    <div class="feature-list">
-      <div class="feature-item" style="font-size: 2rem; color: var(--accent); font-weight: 800;">
-        $1,245,800.00
+  <div class="lobby-hero__jackpot">
+    <p class="eyebrow">Tonight's Headliner</p>
+    <div class="jackpot-display">
+      <span class="jackpot-display__label">Spongebob Naruto Jackpot</span>
+      <strong>$1,245,800</strong>
+      <small>One lobby, multiple tables, fast action</small>
+    </div>
+    <div class="highlight-stack">
+      <div>
+        <span>Hot Table</span>
+        <strong>Roulette Red Streak</strong>
       </div>
-      <div class="feature-item">Daily Tournaments Active</div>
-      <div class="feature-item">VIP Cashback: 15%</div>
+      <div>
+        <span>Fast Lane</span>
+        <strong>Lotto Pulse 6/49</strong>
+      </div>
+      <div>
+        <span>Player Perk</span>
+        <strong>15% VIP Cashback Tonight</strong>
+      </div>
     </div>
   </div>
 </section>
 
+<section class="lobby-games">
+  <button class="game-card card game-card--roulette" type="button" (click)="openRoulette()">
+    <div class="game-card__art">
+      <span class="game-card__badge">Live Table</span>
+      <div class="roulette-art">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="game-card__content">
+      <p class="eyebrow">Roulette</p>
+      <h2>Roulette Royale</h2>
+      <p>Color and parity bets, live spin animation, and instant table results.</p>
+      <span class="game-card__cta">Enter Table</span>
+    </div>
+  </button>
+
+  <button class="game-card card game-card--lotto" type="button" (click)="openLotto()">
+    <div class="game-card__art">
+      <span class="game-card__badge">Featured Draw</span>
+      <div class="lotto-art">
+        <span>7</span>
+        <span>14</span>
+        <span>22</span>
+        <span>31</span>
+      </div>
+    </div>
+    <div class="game-card__content">
+      <p class="eyebrow">Lotto</p>
+      <h2>Lotto Pulse 6/49</h2>
+      <p>Pick six numbers or quick-pick your way into a flashy animated draw.</p>
+      <span class="game-card__cta">Enter Draw</span>
+    </div>
+  </button>
+</section>
+
 @if (authService.isLoggedIn()) {
   <section class="dashboard-grid">
-    <article class="card info-card">
-      <div class="card__header">
-        <h2>Quick Balance</h2>
-        <button class="mini-button" type="button" (click)="loadDashboard()">Refresh</button>
+    <article class="card dashboard-card wallet-card">
+      <div class="dashboard-card__header">
+        <div>
+          <p class="eyebrow">Wallet Snapshot</p>
+          <h2>Casino Balance</h2>
+        </div>
+        <button class="mini-button" type="button" (click)="loadWallet()">Refresh</button>
       </div>
 
-      @if (loading) {
-        <p class="muted">Syncing wallet data...</p>
+      @if (walletLoading) {
+        <p class="muted">Synchronizing live balance...</p>
+      } @else if (wallet) {
+        <p class="balance-label">Available Now</p>
+        <p class="balance-value">${{ wallet.balance }}</p>
+        <div class="wallet-card__footer">
+          <span>Instant wallet sync</span>
+          <span>Protected session</span>
+        </div>
       } @else {
-        <p class="balance-label">Available Funds</p>
-        <p class="balance-value">${{ wallet?.balance ?? '0.00' }}</p>
+        <p class="muted">Balance is unavailable right now.</p>
       }
     </article>
 
-    <article class="card info-card">
-      <div class="card__header">
-        <h2>Recent Activity</h2>
-        <a routerLink="/profile">View All</a>
+    <article class="card dashboard-card activity-card">
+      <div class="dashboard-card__header">
+        <div>
+          <p class="eyebrow">Player Feed</p>
+          <h2>Recent Activity</h2>
+        </div>
+        <button class="mini-button" type="button" (click)="loadGameHistory()">Refresh</button>
       </div>
 
-      @if (recentGames.length) {
+      @if (historyLoading) {
+        <p class="muted">Loading recent rounds...</p>
+      } @else if (recentGames.length) {
         <div class="history-list">
           @for (game of recentGames; track game.id) {
             <div class="history-item">
-              <strong>{{ game.game | titlecase }}</strong>
-              <span [style.color]="game.payout !== '0.00' ? '#4ade80' : '#f87171'">
-                {{ game.payout !== '0.00' ? 'WIN' : 'LOSS' }}
+              <div>
+                <strong>{{ game.game | titlecase }}</strong>
+                <small>Bet ${{ game.amount }} • Won ${{ game.payout }}</small>
+              </div>
+              <span [class.history-item__status--win]="game.payout !== '0.00'" [class.history-item__status--lose]="game.payout === '0.00'">
+                {{ game.payout !== '0.00' ? 'Win' : 'Loss' }}
               </span>
-              <small>Bet: ${{ game.amount }} | Won: ${{ game.payout }}</small>
             </div>
           }
         </div>
       } @else {
-        <p class="muted">No recent bets found.</p>
+        <p class="muted">No rounds on record yet. Step onto a table to start the night.</p>
       }
     </article>
   </section>
+}
+
+@if (errorMessage) {
+  <p class="error-banner">{{ errorMessage }}</p>
 }

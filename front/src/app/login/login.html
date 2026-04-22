@@ -1,9 +1,32 @@
-<section class="auth-layout" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+<section class="auth-lobby">
+  <article class="auth-showcase card">
+    <p class="eyebrow">Member Access</p>
+    <h1>Enter the Neon Floor</h1>
+    <p>
+      Sign in to step back into your player lounge, or register a fresh account to unlock the full casino lobby.
+    </p>
+
+    <div class="auth-showcase__grid">
+      <div>
+        <span>Welcome Bonus</span>
+        <strong>200% Starter Boost</strong>
+      </div>
+      <div>
+        <span>Fast Access</span>
+        <strong>JWT-Protected Entry</strong>
+      </div>
+      <div>
+        <span>Player Tools</span>
+        <strong>Wallet, History, Live Games</strong>
+      </div>
+    </div>
+  </article>
+
   <article class="auth-card">
     <div class="auth-card__header">
       <p class="eyebrow">Secure Access</p>
-      <h1>Member Login</h1>
-      <p>Enter your credentials to access the gaming floor.</p>
+      <h2>Member Login</h2>
+      <p>Choose your entry point and get back to the action.</p>
     </div>
 
     <div class="tabs">
@@ -24,7 +47,7 @@
 
         <label>
           Password
-          <input type="password" name="password" [(ngModel)]="loginForm.password" placeholder="••••••••" required />
+          <input type="password" name="password" [(ngModel)]="loginForm.password" placeholder="********" required />
         </label>
 
         <button class="submit" type="submit" [disabled]="isSubmittingLogin">
@@ -35,15 +58,15 @@
       <form class="auth-form" (ngSubmit)="submitRegister()">
         <label>
           Username
-          <input type="text" name="registerUsername" [(ngModel)]="registerForm.username" required />
+          <input type="text" name="registerUsername" [(ngModel)]="registerForm.username" placeholder="Create username" required />
         </label>
         <label>
           Email
-          <input type="email" name="registerEmail" [(ngModel)]="registerForm.email" required />
+          <input type="email" name="registerEmail" [(ngModel)]="registerForm.email" placeholder="player@luckyorbit.com" required />
         </label>
         <label>
           Password
-          <input type="password" name="registerPassword" [(ngModel)]="registerForm.password" required />
+          <input type="password" name="registerPassword" [(ngModel)]="registerForm.password" placeholder="Create password" required />
         </label>
 
         <button class="submit" type="submit" [disabled]="isSubmittingRegister">

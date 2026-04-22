@@ -15,15 +15,9 @@ import { AuthService } from '../services/auth.service';
 export class Home implements OnInit {
   wallet: Wallet | null = null;
   recentGames: GameHistory[] = [];
-  loading = false;
+  walletLoading = false;
+  historyLoading = false;
   errorMessage = '';
-
-  readonly features = [
-    'JWT authentication with an HTTP interceptor',
-    'Routing across 4 core app pages',
-    'API integration through a shared Angular service',
-    'Wallet management and game history tracking',
-  ];
 
   constructor(
     public readonly authService: AuthService,
@@ -38,26 +32,37 @@ export class Home implements OnInit {
   }
 
   loadDashboard() {
-    this.loading = true;
     this.errorMessage = '';
+    this.loadWallet();
+    this.loadGameHistory();
+  }
+
+  loadWallet() {
+    this.walletLoading = true;
 
     this.apiService.getWallet().subscribe({
       next: (wallet) => {
         this.wallet = wallet;
+        this.walletLoading = false;
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
+        this.walletLoading = false;
       },
     });
+  }
+
+  loadGameHistory() {
+    this.historyLoading = true;
 
     this.apiService.getGameHistory().subscribe({
       next: (history) => {
         this.recentGames = history.slice(0, 3);
-        this.loading = false;
+        this.historyLoading = false;
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
-        this.loading = false;
+        this.historyLoading = false;
       },
     });
   }

@@ -12,14 +12,18 @@ import { AuthService } from './services/auth.service';
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('Lucky Orbit Casino');
+  protected readonly title = signal('Spongebob Naruto to Win');
 
-  navItems = [
-  { path: '/', label: 'Lobby' },
-  { path: '/roulette', label: 'Roulette' },
-  { path: '/lotto', label: 'Lotto' },
-  { path: '/profile', label: 'Wallet' }
-];
+  headerLinks = [
+    { path: '/', label: 'Lobby' },
+    { path: '/profile', label: 'Profile' },
+  ];
+
+  promoStats = [
+    { value: '$1.24M', label: 'Live Jackpot' },
+    { value: '15%', label: 'VIP Cashback' },
+    { value: '24/7', label: 'Host Desk' },
+  ];
 
   constructor(public readonly authService: AuthService) {}
 

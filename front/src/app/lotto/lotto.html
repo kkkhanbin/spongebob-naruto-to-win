@@ -2,10 +2,17 @@
   <article class="card lotto-card">
     <div class="panel__header">
       <div>
-        <p class="eyebrow">Lotto</p>
+        <p class="eyebrow">Lotto Pulse</p>
         <h1>Pick 6 Numbers out of 49</h1>
+        <p class="table-copy">Build your own slip or fire a quick pick and let the draw machine handle the suspense.</p>
       </div>
-      <a class="text-link" routerLink="/profile">Back to Profile</a>
+      <a class="text-link" routerLink="/profile">Player Lounge</a>
+    </div>
+
+    <div class="table-highlights">
+      <span>6 Numbers</span>
+      <span>49 Ball Pool</span>
+      <span>Quick Pick Ready</span>
     </div>
 
     <div class="selected-strip">
@@ -49,6 +56,7 @@
   </article>
 
   <article class="card result-card">
+    <p class="eyebrow">Draw Feed</p>
     <h2>Draw Result</h2>
 
     @if (drawing) {
