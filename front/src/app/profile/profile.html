@@ -3,9 +3,9 @@
     <div class="panel__header">
       <div>
         <p class="eyebrow">Player Profile</p>
-        <h1>{{ user?.username ?? 'Игрок' }}</h1>
+        <h1>{{ user?.username ?? 'Player' }}</h1>
       </div>
-      <button class="mini-button" type="button" (click)="refreshAll()">Обновить данные</button>
+      <button class="mini-button" type="button" (click)="refreshAll()">Refresh Data</button>
     </div>
 
     @if (user) {
@@ -15,20 +15,20 @@
           <strong>{{ user.email }}</strong>
         </div>
         <div>
-          <span>Дата рождения</span>
-          <strong>{{ user.birth_date || 'Не указана' }}</strong>
+          <span>Birth Date</span>
+          <strong>{{ user.birth_date || 'Not set' }}</strong>
         </div>
         <div>
-          <span>Верификация</span>
-          <strong>{{ user.is_verified ? 'Подтвержден' : 'Не подтвержден' }}</strong>
+          <span>Verification</span>
+          <strong>{{ user.is_verified ? 'Verified' : 'Not Verified' }}</strong>
         </div>
         <div>
-          <span>Маршрут</span>
+          <span>Route</span>
           <strong>/profile</strong>
         </div>
       </div>
     } @else if (loading) {
-      <p class="muted">Загружаем профиль...</p>
+      <p class="muted">Loading profile...</p>
     }
 
     @if (errorMessage) {
@@ -46,15 +46,15 @@
         <p class="eyebrow">Wallet</p>
         <h2>${{ wallet?.balance ?? '0.00' }}</h2>
       </div>
-      <a class="text-link" routerLink="/roulette">Перейти к игре</a>
+      <a class="text-link" routerLink="/roulette">Go to Game</a>
     </div>
 
     <form class="wallet-form" (ngSubmit)="depositFunds()">
       <label>
-        Сумма пополнения
+        Deposit Amount
         <input type="number" min="1" name="depositAmount" [(ngModel)]="depositAmount" required />
       </label>
-      <button class="submit" type="submit">Пополнить</button>
+      <button class="submit" type="submit">Add Funds</button>
     </form>
   </article>
 </section>
@@ -63,16 +63,16 @@
   <div class="panel__header">
     <div>
       <p class="eyebrow">Birth Date</p>
-      <h2>Изменение даты рождения</h2>
+      <h2>Update Birth Date</h2>
     </div>
   </div>
 
   <form class="wallet-form" (ngSubmit)="updateBirthDate()">
     <label>
-      Дата рождения
+      Birth Date
       <input type="date" name="birthDateDraft" [(ngModel)]="birthDateDraft" />
     </label>
-    <button class="submit" type="submit">Сохранить дату</button>
+    <button class="submit" type="submit">Save Date</button>
   </form>
 </section>
 
@@ -80,9 +80,9 @@
   <div class="panel__header">
     <div>
       <p class="eyebrow">Game History</p>
-      <h2>История игр</h2>
+      <h2>Game History</h2>
     </div>
-    <button class="mini-button" type="button" (click)="loadGameHistory()">Обновить историю</button>
+    <button class="mini-button" type="button" (click)="loadGameHistory()">Refresh History</button>
   </div>
 
   @if (gameHistory.length) {
@@ -90,29 +90,29 @@
       @for (game of gameHistory; track game.id) {
         <div class="history-row">
           <div>
-            <span>Игра</span>
+            <span>Game</span>
             <strong>{{ game.game }}</strong>
           </div>
           <div>
-            <span>Результат</span>
+            <span>Result</span>
             <strong>{{ game.result }}</strong>
           </div>
           <div>
-            <span>Ставка</span>
+            <span>Bet</span>
             <strong>${{ game.amount }}</strong>
           </div>
           <div>
-            <span>Выплата</span>
+            <span>Payout</span>
             <strong>${{ game.payout }}</strong>
           </div>
           <div>
-            <span>Дата</span>
+            <span>Date</span>
             <strong>{{ game.date | date: 'short' }}</strong>
           </div>
         </div>
       }
     </div>
   } @else {
-    <p class="muted">Пока нет сыгранных раундов.</p>
+    <p class="muted">No rounds played yet.</p>
   }
 </section>

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 import { ApiService, LottoBet, LottoResult } from '../services/api.service';
 
@@ -19,7 +20,10 @@ export class Lotto {
   errorMessage = '';
   readonly numbers = Array.from({ length: 49 }, (_, index) => index + 1);
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly cdr: ChangeDetectorRef,
+  ) {}
 
   toggleNumber(num: number) {
     if (this.bet.numbers.includes(num)) {
@@ -28,7 +32,7 @@ export class Lotto {
     }
 
     if (this.bet.numbers.length === 6) {
-      this.errorMessage = 'Можно выбрать только 6 чисел.';
+      this.errorMessage = 'You can only choose 6 numbers.';
       return;
     }
 
@@ -47,23 +51,31 @@ export class Lotto {
 
   play() {
     if (this.bet.numbers.length !== 6) {
-      this.errorMessage = 'Выберите ровно 6 чисел.';
+      this.errorMessage = 'Select exactly 6 numbers.';
       return;
     }
 
     this.drawing = true;
     this.errorMessage = '';
+    this.result = null;
 
-    this.apiService.playLotto(this.bet).subscribe({
-      next: (res) => {
-        this.result = res;
-      },
-      error: (error: Error) => {
-        this.errorMessage = error.message;
-      },
-      complete: () => {
-        this.drawing = false;
-      },
-    });
+    this.apiService
+      .playLotto(this.bet)
+      .pipe(
+        finalize(() => {
+          this.drawing = false;
+          this.cdr.detectChanges();
+        }),
+      )
+      .subscribe({
+        next: (res) => {
+          this.result = res;
+          this.cdr.detectChanges();
+        },
+        error: (error: Error) => {
+          this.errorMessage = error.message;
+          this.cdr.detectChanges();
+        },
+      });
   }
 }

@@ -3,14 +3,14 @@
     <div class="panel__header">
       <div>
         <p class="eyebrow">Roulette</p>
-        <h1>Ставка на цвет или чётность</h1>
+        <h1>Bet on Color or Parity</h1>
       </div>
-      <a class="text-link" routerLink="/profile">К профилю</a>
+      <a class="text-link" routerLink="/profile">Back to Profile</a>
     </div>
 
     <form class="game-form" (ngSubmit)="play()">
       <label>
-        Тип ставки
+        Bet Type
         <select name="betType" [(ngModel)]="bet.bet_type">
           @for (betType of betTypes; track betType) {
             <option [value]="betType">{{ betType }}</option>
@@ -19,12 +19,12 @@
       </label>
 
       <label>
-        Сумма ставки
+        Bet Amount
         <input type="number" min="1" name="amount" [(ngModel)]="bet.amount" required />
       </label>
 
       <button class="submit" type="submit" [disabled]="spinning">
-        {{ spinning ? 'Крутим...' : 'Сделать ставку' }}
+        {{ spinning ? 'Spinning...' : 'Place Bet' }}
       </button>
     </form>
 
@@ -34,17 +34,31 @@
   </article>
 
   <article class="card result-card">
-    <h2>Результат раунда</h2>
+    <h2>Round Result</h2>
 
-    @if (result) {
+    @if (spinning) {
+      <div class="roulette-loader" aria-live="polite" aria-label="Roulette spin in progress">
+        <div class="roulette-wheel">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <div class="roulette-loader__ball"></div>
+        </div>
+        <p class="roulette-loader__title">Wheel in Motion</p>
+        <p class="muted">The table is spinning up your result...</p>
+      </div>
+    } @else if (result) {
       <div class="roulette-ball">{{ result.result }}</div>
       <p class="result-status" [class.result-status--win]="result.win" [class.result-status--lose]="!result.win">
-        {{ result.win ? 'Победа' : 'Не повезло' }}
+        {{ result.win ? 'Win' : 'No Luck This Time' }}
       </p>
-      <p>Выплата: <strong>${{ result.payout }}</strong></p>
-      <p>Новый баланс: <strong>${{ result.balance }}</strong></p>
+      <p>Payout: <strong>${{ result.payout }}</strong></p>
+      <p>New Balance: <strong>${{ result.balance }}</strong></p>
     } @else {
-      <p class="muted">Сделайте ставку, чтобы получить результат от API.</p>
+      <p class="muted">Place a bet to receive the round result from the API.</p>
     }
   </article>
 </section>

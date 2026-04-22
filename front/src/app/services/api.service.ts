@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, delay } from 'rxjs/operators';
 
 export interface User {
   id: number;
@@ -73,6 +73,7 @@ export interface LottoResult {
 })
 export class ApiService {
   private readonly baseUrl = 'http://127.0.0.1:8000/api';
+  private readonly gameResultDelayMs = 2000;
 
   constructor(private readonly http: HttpClient) {}
 
@@ -146,12 +147,14 @@ export class ApiService {
   playRoulette(bet: RouletteBet): Observable<RouletteResult> {
     return this.http
       .post<RouletteResult>(`${this.baseUrl}/games/roulette/`, bet)
+      .pipe(delay(this.gameResultDelayMs))
       .pipe(catchError((error) => this.handleError(error)));
   }
 
   playLotto(bet: LottoBet): Observable<LottoResult> {
     return this.http
       .post<LottoResult>(`${this.baseUrl}/games/lotto/`, bet)
+      .pipe(delay(this.gameResultDelayMs))
       .pipe(catchError((error) => this.handleError(error)));
   }
 }

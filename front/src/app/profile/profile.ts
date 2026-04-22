@@ -82,7 +82,7 @@ export class Profile implements OnInit {
     this.apiService.deposit(this.depositAmount).subscribe({
       next: (wallet) => {
         this.wallet = wallet;
-        this.successMessage = `Баланс пополнен на $${this.depositAmount}.`;
+        this.successMessage = `Balance topped up by $${this.depositAmount}.`;
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
@@ -102,7 +102,7 @@ export class Profile implements OnInit {
         next: (user) => {
           this.user = user;
           this.birthDateDraft = user.birth_date ?? '';
-          this.successMessage = 'Дата рождения обновлена.';
+          this.successMessage = 'Birth date updated.';
         },
         error: (error: Error) => {
           this.errorMessage = error.message;

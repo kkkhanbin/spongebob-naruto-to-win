@@ -19,10 +19,10 @@ export class Home implements OnInit {
   errorMessage = '';
 
   readonly features = [
-    'JWT авторизация и HTTP interceptor',
-    'Роутинг между 4 страницами приложения',
-    'API-интеграция через единый Angular Service',
-    'Управление кошельком и история игр',
+    'JWT authentication with an HTTP interceptor',
+    'Routing across 4 core app pages',
+    'API integration through a shared Angular service',
+    'Wallet management and game history tracking',
   ];
 
   constructor(
