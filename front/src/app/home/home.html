@@ -3,8 +3,8 @@
     <p class="eyebrow">Main Lobby</p>
     <h1>Spongebob, Patrick and Naruto Are Running Tonight's Casino Floor</h1>
     <p class="lead">
-      Step into the main lobby, pick your game table, and move between roulette, lotto, wallet actions, and profile tools
-      from one casino hub.
+      Step into the main lobby, pick your game table, and move between blackjack, roulette, lotto, wallet actions, and
+      profile tools from one casino hub.
     </p>
 
     <div class="hero-actions">
@@ -26,21 +26,38 @@
     <div class="highlight-stack">
       <div>
         <span>Hot Table</span>
-        <strong>Roulette Red Streak</strong>
+        <strong>Blackjack Double Window</strong>
       </div>
       <div>
         <span>Fast Lane</span>
-        <strong>Lotto Pulse 6/49</strong>
+        <strong>Roulette Red Streak</strong>
       </div>
       <div>
-        <span>Player Perk</span>
-        <strong>15% VIP Cashback Tonight</strong>
+        <span>Featured Draw</span>
+        <strong>Lotto Pulse 6/49</strong>
       </div>
     </div>
   </div>
 </section>
 
 <section class="lobby-games">
+  <button class="game-card card game-card--blackjack" type="button" (click)="openBlackjack()">
+    <div class="game-card__art">
+      <span class="game-card__badge">Authoritative Table</span>
+      <div class="blackjack-art">
+        <span class="blackjack-art__card">A♠</span>
+        <span class="blackjack-art__card blackjack-art__card--accent">K♥</span>
+        <span class="blackjack-art__chip">3:2</span>
+      </div>
+    </div>
+    <div class="game-card__content">
+      <p class="eyebrow">Blackjack</p>
+      <h2>Dealer's Edge</h2>
+      <p>Live hands with hit, stand, double, split, dealer automation, and persistent server-side state.</p>
+      <span class="game-card__cta">Take a Seat</span>
+    </div>
+  </button>
+
   <button class="game-card card game-card--roulette" type="button" (click)="openRoulette()">
     <div class="game-card__art">
       <span class="game-card__badge">Live Table</span>

@@ -75,6 +75,10 @@ export class Home implements OnInit {
     this.router.navigate(['/roulette']);
   }
 
+  openBlackjack() {
+    this.router.navigate(['/blackjack']);
+  }
+
   openLotto() {
     this.router.navigate(['/lotto']);
   }

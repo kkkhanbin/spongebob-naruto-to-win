@@ -99,6 +99,7 @@
 
 .highlight-stack {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.8rem;
 }
 
@@ -123,7 +124,7 @@
 }
 
 .lobby-games {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-bottom: 1.25rem;
 }
 
@@ -182,6 +183,12 @@
   color: #fff7d3;
 }
 
+.game-card--blackjack {
+  background:
+    radial-gradient(circle at top left, rgba(255, 224, 102, 0.18), transparent 32%),
+    linear-gradient(135deg, rgba(10, 28, 24, 0.96), rgba(9, 19, 17, 0.94));
+}
+
 .game-card--roulette {
   background:
     radial-gradient(circle at top left, rgba(255, 77, 109, 0.16), transparent 30%),
@@ -192,6 +199,55 @@
   background:
     radial-gradient(circle at top left, rgba(103, 232, 249, 0.14), transparent 30%),
     linear-gradient(135deg, rgba(17, 22, 39, 0.96), rgba(12, 17, 30, 0.94));
+}
+
+.blackjack-art {
+  position: relative;
+  display: grid;
+  align-content: end;
+  justify-items: start;
+  gap: 0.8rem;
+  margin-top: auto;
+}
+
+.blackjack-art__card,
+.blackjack-art__chip {
+  display: grid;
+  place-items: center;
+}
+
+.blackjack-art__card {
+  width: 4.8rem;
+  aspect-ratio: 5 / 7;
+  border-radius: 0.9rem;
+  color: #111827;
+  font-size: 1.6rem;
+  font-weight: 900;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 242, 245, 0.98));
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.blackjack-art__card--accent {
+  margin-left: 2.4rem;
+  margin-top: -4.7rem;
+  color: #b91c1c;
+}
+
+.blackjack-art__chip {
+  width: 4.4rem;
+  height: 4.4rem;
+  margin-left: 5.6rem;
+  margin-top: -1.2rem;
+  border-radius: 50%;
+  color: #fff6d1;
+  font-size: 1rem;
+  font-weight: 900;
+  background:
+    radial-gradient(circle at center, rgba(8, 17, 27, 0.96) 0 38%, transparent 38%),
+    repeating-conic-gradient(from 0deg, #ff8c42 0deg 15deg, #ffe066 15deg 30deg);
+  border: 0.35rem solid rgba(255, 255, 255, 0.08);
 }
 
 .roulette-art {
@@ -346,6 +402,10 @@
   .lobby-games,
   .dashboard-grid,
   .game-card {
+    grid-template-columns: 1fr;
+  }
+
+  .highlight-stack {
     grid-template-columns: 1fr;
   }
 }

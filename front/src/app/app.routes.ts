@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { Blackjack } from './blackjack/blackjack';
 import { Home } from './home/home';
 import { Login } from './login/login';
 import { Lotto } from './lotto/lotto';
@@ -11,6 +12,7 @@ export const routes: Routes = [
   { path: '', component: Home },
   { path: 'login', component: Login },
   { path: 'profile', component: Profile, canActivate: [authGuard] },
+  { path: 'blackjack', component: Blackjack, canActivate: [authGuard] },
   { path: 'roulette', component: Roulette, canActivate: [authGuard] },
   { path: 'lotto', component: Lotto, canActivate: [authGuard] },
   { path: '**', redirectTo: '' },

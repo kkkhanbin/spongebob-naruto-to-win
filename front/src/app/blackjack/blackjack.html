@@ -1,0 +1,123 @@
+@let state = (state$ | async);
+@let loading = (loading$ | async);
+@let error = (error$ | async);
+@let activeHandState = activeHand(state);
+
+<section class="blackjack-shell">
+  <article class="card hero-card">
+    <div class="hero-card__copy">
+      <p class="eyebrow">Blackjack Floor</p>
+      <h1>Server-Authoritative Blackjack With Split, Double, and Persistent Table State</h1>
+      <p class="hero-card__lead">
+        Every card draw, wager change, and settlement is decided on the Django side. The client only reflects the live
+        state of the table.
+      </p>
+    </div>
+
+    <div class="hero-card__stats">
+      <div>
+        <span>Dealer Rule</span>
+        <strong>Hits to 17</strong>
+      </div>
+      <div>
+        <span>Natural</span>
+        <strong>3:2 Payout</strong>
+      </div>
+      <div>
+        <span>Safety</span>
+        <strong>Nonce Protected</strong>
+      </div>
+    </div>
+  </article>
+
+  <app-blackjack-bet
+    [disabled]="!!loading || roundInProgress(state)"
+    [(betAmount)]="betAmount"
+    (startRound)="startRound($event)" />
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  <section class="status-strip">
+    <div class="status-strip__item card">
+      <span>Balance</span>
+      <strong>\${{ state?.balance ?? '0.00' }}</strong>
+    </div>
+    <div class="status-strip__item card">
+      <span>Table Status</span>
+      <strong>{{ state?.status ? (state?.status | titlecase) : 'Idle' }}</strong>
+    </div>
+    <div class="status-strip__item card">
+      <span>Message</span>
+      <strong>{{ state?.message ?? 'Start a round to receive a live table state.' }}</strong>
+    </div>
+  </section>
+
+  <section class="table-grid">
+    <app-blackjack-hand
+      title="Dealer"
+      subtitle="House Hand"
+      [cards]="state?.dealer_cards ?? []"
+      [total]="state?.dealer_total ?? null"
+      [dealer]="true" />
+
+    <section class="player-grid">
+      @if (state?.hands?.length) {
+        @if (state; as currentState) {
+          @for (hand of currentState.hands; track hand.id) {
+            <app-blackjack-hand
+              [title]="'Player Hand ' + (hand.hand_index + 1)"
+              [subtitle]="hand.is_split_hand ? 'Split Table Position' : 'Primary Hand'"
+              [cards]="hand.cards"
+              [total]="hand.total"
+              [hand]="hand" />
+          }
+        }
+      } @else {
+        <article class="card empty-state">
+          <p class="eyebrow">Seat Open</p>
+          <h2>No active round</h2>
+          <p class="muted">Use the buy-in panel above to place a bet and let the backend deal the opening hand.</p>
+        </article>
+      }
+    </section>
+  </section>
+
+  <app-blackjack-controls
+    [disabled]="!!loading"
+    [statusLabel]="controlsLabel(state)"
+    [canHit]="!!activeHandState?.can_hit"
+    [canStand]="!!activeHandState?.can_stand"
+    [canDouble]="!!activeHandState?.can_double"
+    [canSplit]="!!activeHandState?.can_split"
+    (hit)="hit()"
+    (stand)="stand()"
+    (double)="double()"
+    (split)="split()" />
+
+  @if (state?.hands?.length) {
+    <section class="round-summary card">
+      <div class="round-summary__header">
+        <div>
+          <p class="eyebrow">Round Ledger</p>
+          <h2>Hand Outcomes</h2>
+        </div>
+        <a class="text-link" routerLink="/profile">Profile & History</a>
+      </div>
+
+      <div class="round-summary__grid">
+        @if (state; as currentState) {
+          @for (hand of currentState.hands; track hand.id) {
+            <article class="round-summary__item" [class]="outcomeTone(hand.outcome)">
+              <strong>Hand {{ hand.hand_index + 1 }}</strong>
+              <span>{{ hand.outcome | titlecase }}</span>
+              <small>Bet \${{ hand.wager }}</small>
+              <small>Payout \${{ hand.payout }}</small>
+            </article>
+          }
+        }
+      </div>
+    </section>
+  }
+</section>
